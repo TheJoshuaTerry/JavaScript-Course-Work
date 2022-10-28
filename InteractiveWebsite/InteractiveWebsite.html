@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  	<head>
+    	<meta charset="utf-8">
+		<title>Website Template</title>
+		<style> 
+			* {margin:0; padding:20px; text-align:center; }
+
+			body {width:1000px; margin:40px auto;}
+			input {padding:2px; margin: 10px 0}
+			header {background:red; height: 100px}
+			nav {display: flex; justify-content: space-around; flex-wrap: wrap; background:lightgreen;}
+			button {background: #ff9999; list-style: none; width: 100px; }
+			main {background:yellow}
+			footer {background:lightblue; height: 60px}
+			button:hover {background: pink}
+			span {background: pink}
+			p {text-align: left}
+    	</style>
+	</head>
+<body>
+	<header><h1>Website Template</h1></header>
+
+	<nav></nav>
+
+	<main>
+		<form id=myform>
+
+			<div id=text>
+
+				<label>What is your header text?
+				
+				<input type=text id=headerText></label><br>
+				
+				<label>What is your footer text?
+				
+				<input type=text id=footerText></label>
+				
+			</div>
+
+			<div id=buttons>
+
+				How many buttons would you like?
+
+				<label>1 <input name=numberButtons type=radio value=1></label>
+				<label>2 <input name=numberButtons type=radio value=2></label>
+				<label>3 <input name=numberButtons type=radio value=3></label>
+				<label>4 <input name=numberButtons type=radio value=4></label>
+				<label>5 <input name=numberButtons type=radio value=5></label>
+				<label>6 <input name=numberButtons type=radio value=6></label>
+				<label>7 <input name=numberButtons type=radio value=7></label>
+				<label>8 <input name=numberButtons type=radio value=8></label>
+			
+			</div>
+
+			<span id=done>Done</span>
+
+		</form>
+
+	</main>
+
+	<footer><h2></h2></footer>
+
+	<script src="interactive.js"></script> 
+</body>	
+
+</html>
