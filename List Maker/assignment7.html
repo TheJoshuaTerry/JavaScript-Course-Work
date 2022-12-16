@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+	<meta charset="utf-8">
+	<title>Ultimate List Maker</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<style>
+            
+	* {margin:0; padding:10px; text-align:center; }  
+	body {width:80%; margin:40px auto; min-width: 400px; max-width: 600px}
+	header {background:red}
+	#counters {background:lightgreen;font-weight: bold; font-size: 150%;display: flex; justify-content: space-around; flex-wrap: wrap}
+	button {background: #ff9999; width: 100px; }
+	main {background:yellow; min-height: 80px}
+	footer {background:lightblue}
+	button:hover {background: pink}
+	li {list-style: none; font-weight: bold; font-size: 150%}
+	.complete {color: red; text-decoration: line-through}
+
+  </style>
+	</head>
+<body>
+
+<header><h1 id="header">The Ultimate List Maker</h1></header>
+
+<div id=counters>
+  <p>Items Active <span id="active"></span></p>
+  <p>Items Completed <span id="completed"></span></p>	
+</div>
+
+<main>
+	
+  <ul></ul>
+  
+<button id="showForm">Add New Item</button>
+  
+  <form id="newItemForm">
+    <input type="text" id="itemDescription" placeholder="Add description">
+    <input type="submit" id="add" value="add">
+  </form>
+
+</main>
+
+<footer><h2>Making lists since 2018</h2></footer>
+
+<script>
+$(function() {
+
+	// SETUP
+	var $list, $newItemForm, $showForm, $completeCounter;
+	var item = '';                                  // item is an empty string
+	var comCntr = 0;
+	$list = $('ul');                                // Cache the unordered list
+	$newItemForm = $('#newItemForm');               // Cache form to add new items
+	$showForm = $('#showForm');          		    // Cache button to show form
+
+	// ACTIVE ITEM COUNTER
+	function updateActive() {                       // Create function to update Active counter
+	  var items = $('li[class!=complete]').length;  // Number of items in list
+	  $('#active').text(items);                     // Added into counter circle
+	}
+	updateActive();                                 // Call the Active Counter function
+
+	function updateCompleted() {                    // Create function to update Completed counter
+	  var items = comCntr;                          // 
+	  $('#completed').text(items);                  // Added into counter 
+	}
+	updateCompleted();
+
+	// SETUP FORM FOR NEW ITEMS
+	function showButton()
+	{
+		$showForm.show();                              // Show the button
+		$newItemForm.hide();                           // Hide the form
+		$('#showForm').on('click', function() {        // When click on new item button
+		  $showForm.hide();                            // Hide the button
+		  $newItemForm.show();                         // Show the form
+		});
+	}
+	showButton();
+
+	// ADDING A NEW LIST ITEM
+	$newItemForm.on('submit', function(e) {        // When a new item is submitted
+	  e.preventDefault();                          // Prevent form being submitted
+	  var text = $('input:text').val();            // Get value of text input
+	  if(text !== '')
+	  {
+		$list.append('<li>' + text + '</li>');       // Add item to end of the list
+	  	$('input:text').val('');                     // Empty the text input
+	  	updateActive();                              // Update the count
+	  	showButton();
+	  }
+	  else
+	  {
+		alert('Must enter a value!!');
+		showButton();
+	  }
+	  
+	});
+
+	// CLICK HANDLING - USES DELEGATION ON <ul> ELEMENT
+	$list.on('click', 'li', function() {
+	  var $this = $(this);                        // Cache the element in a jQuery object
+	  var complete = $this.hasClass('complete');  // Is item complete
+
+	  if (complete === true) {                    // Check if item is complete
+		$this.animate({                           // If so, animate opacity + padding
+		  opacity: 0.0,         
+		  paddingLeft: '+=180'         
+		}, 500, 'swing', function() {             // Use callback when animation completes
+		  $this.remove();                         // Then completely remove this item
+		});
+		comCntr = comCntr - 1; 
+		updateCompleted();        
+	  } else {                                    // Otherwise indicate it is complete
+		item = $this.text();                      // Get the text from the list item
+		$this.remove();                           // Remove the list item
+		$list                                     // Add back to end of list as complete
+		  .append('<li class=\"complete\">' + item + '</li>')
+		  .hide().fadeIn(300);                    // Hide it so it can be faded in
+		updateActive();                           // Update the counter
+		comCntr = comCntr + 1;
+		updateCompleted();
+	  }                                           // End of else option
+	});                                           // End of event handler
+
+});
+
+	
+</script>
+
+</body>	
+
+</html>
